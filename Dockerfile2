@@ -1,0 +1,6 @@
+FROM rust:latest
+RUN rustup component add rustfmt
+WORKDIR /app
+ADD . .
+RUN cargo build --release
+CMD ["./target/release/test_rust"]

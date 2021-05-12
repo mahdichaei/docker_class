@@ -1,0 +1,10 @@
+FROM rust:latest AS build-env
+RUN rustup component add rustfmt
+WORKDIR /app
+ADD . .
+RUN cargo build --release
+
+FROM debian:stable-slim AS service
+WORKDIR /app
+COPY --from=build-env /app/target/release/test_rust test_rust
+ENTRYPOINT ["./test_rust"]
